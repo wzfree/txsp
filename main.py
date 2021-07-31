@@ -6,8 +6,6 @@ import os
 #成长明细
 #/fcgi-bin/comm_cgi?name=get_score_flow&score_type=1
 
-# 钉钉机器人的 webhook
-webhook = os.environ["webhook"] # 钉钉机器人的 webhook
 cookie= os.environ["cookie"] #腾讯spcookie
 headers = {
     'Referer': 'https://film.qq.com/x/autovue/grade/?ptag=Vgrade.rule',
@@ -94,19 +92,7 @@ def userinfo():
     #当前V力值
     level_score=json.loads(userinfo.text)['score']
     output(f'[+] 当前V力值： {level_score}')
-   
-def dingtalk(contents):
-    webhook_url = webhook
-    dd_header = {"Content-Type": "application/json", "Charset": "UTF-8"}
-    dd_message = {
-        "msgtype": "text",
-        "text": {
-            "content": f'腾讯视频签到提醒！\n{contents}'
-        }
-    }
-    r = requests.post(url=webhook_url,headers=dd_header,data=json.dumps(dd_message))
-    if r.status_code == 200:
-        print('[+] 钉钉消息已推送，请查收  ')
+
 def main():
     title='开始签到'
     content_1=sign_1()
@@ -120,4 +106,4 @@ def main():
     #dingtalk(contents)
 
 if __name__ == '__main__':
-    main()   
+    main()
